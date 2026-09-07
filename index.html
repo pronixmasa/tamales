@@ -180,7 +180,9 @@
   .btn-primario{width:100%;margin-top:16px;background:linear-gradient(135deg,#C7481D,#A8360F);color:#fff;border:none;padding:16px;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 4px 12px rgba(199,72,29,.35);}
   .btn-primario:disabled{background:#C9BFA9;cursor:not-allowed;}
   .btn-secundario{width:100%;margin-top:10px;background:transparent;color:var(--antracita);border:1.5px solid var(--antracita);padding:13px;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;}
-  .error{color:var(--ladrillo-osc);font-size:12.5px;margin-top:4px;display:none;}
+  .error{color:#fff;background:#B42318;border-radius:10px;padding:8px 11px;font-size:13px;font-weight:800;margin-top:6px;display:none;}
+  input.invalido,textarea.invalido{border-color:#B42318;background:#FFF5F4;}
+  #errGeneral{display:none;margin-top:14px;background:#B42318;color:#fff;font-weight:800;font-size:13.5px;border-radius:12px;padding:11px 13px;text-align:center;}
   footer{max-width:520px;margin:0 auto;padding:0 16px 110px;text-align:center;color:var(--muted);font-size:12.5px;}
   .wa-float{position:fixed;right:16px;bottom:96px;z-index:25;display:flex;align-items:center;gap:8px;text-decoration:none;}
   .wa-float .burbuja{background:#fff;border:1px solid var(--linea);color:var(--antracita);font-size:12.5px;font-weight:800;border-radius:20px;padding:7px 12px;box-shadow:0 4px 14px rgba(0,0,0,.18);}
@@ -284,7 +286,8 @@
   </div>
   <input type="text" id="billete" placeholder="Ej. $200, cambio justo..." style="margin-top:10px">
   <div class="aviso-pago">💵 Pagas en efectivo cuando te entreguemos tu pedido.</div>
-  <button class="btn-primario" onclick="enviarPedido()">Confirmar pedido por WhatsApp</button>
+  <div id="errGeneral">⚠️ Te falta completar algún dato para enviar tu pedido. Revisa los campos marcados en rojo.</div>
+  <button class="btn-primario" id="btnEnviar" onclick="enviarPedido()">Confirmar pedido por WhatsApp</button>
   <button class="btn-secundario" onclick="volverACarrito()">Regresar al carrito</button>
 </div>
 
@@ -539,12 +542,27 @@ function enviarPedido(){
   const direccion = document.getElementById("direccion").value.trim();
   const referencia = document.getElementById("referencia").value.trim();
   const billete = document.getElementById("billete").value.trim();
-  let valido = true;
-  document.getElementById("errNombre").style.display = nombre ? "none" : "block";
-  document.getElementById("errTelefono").style.display = /^\d{10}$/.test(telefono) ? "none" : "block";
-  document.getElementById("errDireccion").style.display = direccion ? "none" : "block";
-  if(!nombre || !/^\d{10}$/.test(telefono) || !direccion) valido = false;
-  if(!valido) return;
+  const telOk = /^\d{10}$/.test(telefono);
+  const nomOk = nombre.length >= 2;
+  const dirOk = direccion.length >= 5;
+  document.getElementById("errNombre").style.display = nomOk ? "none" : "block";
+  document.getElementById("errTelefono").style.display = telOk ? "none" : "block";
+  document.getElementById("errDireccion").style.display = dirOk ? "none" : "block";
+  document.getElementById("nombre").classList.toggle("invalido", !nomOk);
+  document.getElementById("telefono").classList.toggle("invalido", !telOk);
+  document.getElementById("direccion").classList.toggle("invalido", !dirOk);
+  document.getElementById("errNombre").textContent = "⚠️ Escribe tu nombre.";
+  document.getElementById("errTelefono").textContent = telefono && !telOk ? "⚠️ El teléfono debe tener 10 dígitos, sin espacios ni guiones." : "⚠️ Escribe tu teléfono a 10 dígitos.";
+  document.getElementById("errDireccion").textContent = "⚠️ Escribe tu calle, número y colonia.";
+  if(!nomOk || !telOk || !dirOk){
+    document.getElementById("errGeneral").style.display = "block";
+    const primero = !nomOk ? "nombre" : (!telOk ? "telefono" : "direccion");
+    const el = document.getElementById(primero);
+    el.scrollIntoView({behavior:"smooth", block:"center"});
+    setTimeout(()=>el.focus({preventScroll:true}), 400);
+    return;
+  }
+  document.getElementById("errGeneral").style.display = "none";
 
   const s = subtotalCarrito();
   const e = costoEnvio();
@@ -571,6 +589,12 @@ Pago: contraentrega (efectivo)`;
   window.open(`https://wa.me/${WHATSAPP_NEGOCIO}?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
+["nombre","telefono","direccion"].forEach(id=>{
+  document.getElementById(id).addEventListener("input", e=>{
+    e.target.classList.remove("invalido");
+    if(document.querySelectorAll(".invalido").length===0) document.getElementById("errGeneral").style.display="none";
+  });
+});
 pintarCatalogo();
 verificarHorario();
 setInterval(verificarHorario, 30000);
