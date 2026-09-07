@@ -266,7 +266,7 @@
   <input type="text" id="nombre" placeholder="¿Cómo te llamas?" autocomplete="name">
   <div class="error" id="errNombre">Escribe tu nombre.</div>
   <label for="telefono">Teléfono</label>
-  <input type="tel" id="telefono" placeholder="10 dígitos" inputmode="numeric" autocomplete="tel">
+  <input type="tel" id="telefono" placeholder="10 dígitos" inputmode="numeric" autocomplete="tel" maxlength="10" oninput="this.value=this.value.replace(/\D/g,'').slice(0,10)">
   <div class="error" id="errTelefono">Escribe un teléfono a 10 dígitos.</div>
   <label for="direccion">Dirección de entrega</label>
   <textarea id="direccion" placeholder="Calle, número, colonia"></textarea>
@@ -553,7 +553,7 @@ function enviarPedido(){
   document.getElementById("direccion").classList.toggle("invalido", !dirOk);
   document.getElementById("errNombre").textContent = "⚠️ Escribe tu nombre.";
   document.getElementById("errTelefono").textContent = telefono && !telOk ? "⚠️ El teléfono debe tener 10 dígitos, sin espacios ni guiones." : "⚠️ Escribe tu teléfono a 10 dígitos.";
-  document.getElementById("errDireccion").textContent = "⚠️ Escribe tu calle, número y colonia.";
+  document.getElementById("errDireccion").textContent = "⚠️ Escribe tu calle y número. ";
   if(!nomOk || !telOk || !dirOk){
     document.getElementById("errGeneral").style.display = "block";
     const primero = !nomOk ? "nombre" : (!telOk ? "telefono" : "direccion");
