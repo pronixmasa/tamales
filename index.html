@@ -321,9 +321,9 @@
 <script>
 /* Para marcar un producto como AGOTADO solo cambia disponible:true por disponible:false en su línea. */
 const productos = [
-  {id:1, disponible:true, categoria:"🫓 Tamales calientitos", nombre:"Tamal rojo", presentacion:"$16 · pieza", precio:16, unidad:"pieza", imagen:"fotos/tamal rojo.jpg", emoji:"🫓", desc:"Jugosa carne de cerdo en salsa roja de tomatillo molcajeteada. Sabroso, con masa suavecita de maíz nixtamalizado."},
-  {id:2, disponible:true, categoria:"🫓 Tamales calientitos", nombre:"Tamal verde de rajas con queso", presentacion:"$16 · pieza", precio:16, unidad:"pieza", imagen:"fotos/tamal verde.jpg", emoji:"🫓", desc:"Rajas de chile güero y queso fundido en salsita verde de tomatillo asado. Cremoso, suave y lleno de sabor casero."},
-  {id:3, disponible:true, categoria:"🫓 Tamales calientitos", nombre:"Tamal dulce de fresa con pasas", presentacion:"$16 · pieza", precio:16, unidad:"pieza", imagen:"fotos/tamal azucar fresa.jpg", emoji:"🌽", desc:"Dulcecito rosa de azúcar sabor fresa y pasas. Esponjosito, el favorito de los niños."},
+  {id:1, disponible:true, categoria:"🫓 Tamales calientitos", nombre:"Tamal rojo", presentacion:"$15 · pieza", precio:15, unidad:"pieza", imagen:"fotos/tamal rojo.jpg", emoji:"🫓", desc:"Jugosa carne de cerdo en salsa roja de tomatillo molcajeteada. Sabroso, con masa suavecita de maíz nixtamalizado."},
+  {id:2, disponible:true, categoria:"🫓 Tamales calientitos", nombre:"Tamal verde de rajas con queso", presentacion:"$15 · pieza", precio:15, unidad:"pieza", imagen:"fotos/tamal verde.jpg", emoji:"🫓", desc:"Rajas de chile güero y queso fundido en salsita verde de tomatillo asado. Cremoso, suave y lleno de sabor casero."},
+  {id:3, disponible:true, categoria:"🫓 Tamales calientitos", nombre:"Tamal dulce de fresa con pasas", presentacion:"$15 · pieza", precio:15, unidad:"pieza", imagen:"fotos/tamal azucar fresa.jpg", emoji:"🌽", desc:"Dulcecito rosa de azúcar sabor fresa y pasas. Esponjosito, el favorito de los niños."},
   {id:4, disponible:true, categoria:"☕ Atole champurrado", nombre:"Champurrado grande · 1 L", presentacion:"$50 · Termo 1 litro", precio:50, unidad:"termo", imagen:"fotos/termo_1litro.jpg", emoji:"☕", desc:"Nuestro champurrado espesito de la casa, hecho a fuego lento con maíz nixtamalizado, chocolate de tablilla, piloncillo y canela. Ideal para compartir."},
   {id:5, disponible:true, categoria:"☕ Atole champurrado", nombre:"Champurrado mediano · 1/2 L", presentacion:"$28 · Termo 1/2 litro", precio:28, unidad:"termo", imagen:"fotos/termo_12litro.jpg", emoji:"☕", desc:"El mismo sabor artesanal, en tamaño mediano. Calientito, chocolatoso y con toque de canela. Perfecto para 2 tazas."},
   {id:6, disponible:true, categoria:"☕ Atole champurrado", nombre:"Champurrado pequeño · 1/4 L", presentacion:"$15 · Termo 1/4 litro", precio:15, unidad:"termo", imagen:"fotos/termo_14litro.jpg", emoji:"☕", desc:"Para el antojo individual. Champurrado calientito y espesito, recién hecho con ingredientes 100% naturales."},
@@ -375,26 +375,36 @@ function usarUbicacion(){
   const msg = document.getElementById("ubiMsg");
   if(!navigator.geolocation){
     msg.className = "ubi-msg err"; msg.style.display = "block";
-    msg.textContent = "⚠️ Tu teléfono no permite compartir ubicación. Escribe tu dirección, con eso basta.";
+    msg.textContent = "⚠️ Tu navegador no permite compartir ubicación. Escribe tu colonia, calle y número, con eso basta.";
+    return;
+  }
+  if(window.isSecureContext===false){
+    msg.className = "ubi-msg err"; msg.style.display = "block";
+    msg.textContent = "⚠️ La ubicación solo funciona con la página publicada en internet (https). Por ahora escribe tu dirección manual.";
     return;
   }
   btn.disabled = true; btn.textContent = "⏳ Obteniendo tu ubicación...";
-  navigator.geolocation.getCurrentPosition(
-    (pos)=>{
-      const lat = pos.coords.latitude.toFixed(6);
-      const lng = pos.coords.longitude.toFixed(6);
-      ubicacionCliente = {lat, lng, url:`https://www.google.com/maps?q=${lat},${lng}`};
-      btn.disabled = false; btn.textContent = "📍 Actualizar mi ubicación";
-      msg.className = "ubi-msg ok"; msg.style.display = "block";
-      msg.innerHTML = `✅ Ubicación capturada. <a href="${ubicacionCliente.url}" target="_blank" rel="noopener">Ver en mapa</a><button type="button" class="ubi-quitar" onclick="quitarUbicacion()">quitar</button>`;
-    },
-    ()=>{
-      btn.disabled = false; btn.textContent = "📍 Usar mi ubicación actual";
-      msg.className = "ubi-msg err"; msg.style.display = "block";
-      msg.textContent = "⚠️ No se pudo obtener tu ubicación. Activa el GPS y permite el acceso, o escribe tu dirección.";
-    },
-    {enableHighAccuracy:true, timeout:15000, maximumAge:60000}
-  );
+  msg.className = "ubi-msg err"; msg.style.display = "none";
+  const ok = (pos)=>{
+    const lat = pos.coords.latitude.toFixed(6);
+    const lng = pos.coords.longitude.toFixed(6);
+    ubicacionCliente = {lat, lng, url:`https://www.google.com/maps?q=${lat},${lng}`};
+    btn.disabled = false; btn.textContent = "📍 Actualizar mi ubicación";
+    msg.className = "ubi-msg ok"; msg.style.display = "block";
+    msg.innerHTML = `✅ Ubicación capturada. <a href="${ubicacionCliente.url}" target="_blank" rel="noopener">Ver en mapa</a><button type="button" class="ubi-quitar" onclick="quitarUbicacion()">quitar</button>`;
+  };
+  const fallo = (err, reintentado)=>{
+    if(!reintentado && err && (err.code===2 || err.code===3)){
+      navigator.geolocation.getCurrentPosition(ok, (e2)=>fallo(e2,true), {enableHighAccuracy:false, timeout:20000, maximumAge:60000});
+      return;
+    }
+    btn.disabled = false; btn.textContent = "📍 Reintentar ubicación";
+    msg.className = "ubi-msg err"; msg.style.display = "block";
+    if(err && err.code===1) msg.textContent = "⚠️ Bloqueaste el permiso de ubicación. Actívalo en el candadito de la barra del navegador y reintenta. Si no, escribe tu dirección manual.";
+    else if(err && err.code===3) msg.textContent = "⚠️ Tardó mucho en responder el GPS. Sal al exterior o acércate a una ventana y toca Reintentar. Si no, escribe tu dirección manual.";
+    else msg.textContent = "⚠️ No se pudo obtener tu ubicación. Activa GPS + WiFi, permite el acceso y reintenta. Si no, escribe tu dirección manual.";
+  };
+  navigator.geolocation.getCurrentPosition(ok, (e)=>fallo(e,false), {enableHighAccuracy:true, timeout:12000, maximumAge:30000});
 }
 function quitarUbicacion(){
   ubicacionCliente = null;
