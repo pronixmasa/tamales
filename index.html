@@ -132,6 +132,10 @@
     font-weight:800;font-size:15px;cursor:pointer;white-space:nowrap;
   }
 
+  .pasos{max-width:520px;margin:0 auto;padding:14px 16px 0;display:flex;gap:8px;}
+  .paso{flex:1;background:#fff;border:1px solid var(--linea);border-radius:12px;padding:10px 8px;text-align:center;font-size:12px;font-weight:800;color:var(--antracita);line-height:1.35;}
+  .paso b{display:block;font-size:18px;margin-bottom:2px;}
+  .paso span{display:block;font-weight:700;color:var(--muted);font-size:11.5px;}
   .fondo-panel{position:fixed;inset:0;background:rgba(20,20,24,.55);display:none;z-index:30;}
   .fondo-panel.activo{display:block;}
   .panel{
@@ -171,6 +175,7 @@
   textarea{resize:vertical;min-height:64px;}
   .aviso-pago{margin-top:16px;background:var(--ladrillo-claro);border:1px solid var(--ladrillo);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--antracita);}
   .btn-ubicacion{width:100%;margin-top:10px;background:#fff;color:var(--antracita);border:1.5px dashed var(--ladrillo);padding:12px;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;}
+  .btn-ubicacion.destacado{background:var(--antracita);color:#fff;border:2px solid var(--antracita);border-bottom:4px solid var(--maiz);font-size:15px;padding:14px;}
   .btn-ubicacion:disabled{opacity:.6;cursor:wait;}
   .ubi-msg{margin-top:8px;border-radius:10px;padding:9px 12px;font-size:13px;font-weight:700;}
   .ubi-msg.ok{background:#E8F5E9;border:1px solid #1E7A34;color:#1E7A34;}
@@ -204,7 +209,7 @@
 <header>
   <h1 class="brand">🌽 TAMALES <span>DOÑA LUPE</span></h1>
   <p class="subtitulo">SUCURSAL OLIVOS · Receta artesanal de la casa</p>
-  <p class="subtitulo">Tamales calientitos en hoja de maíz y atole champurrado espesito. Pide por WhatsApp y te lo llevamos.</p>
+  <p class="subtitulo">Haz tu pedido aquí mismo, sin escribirnos. Al final se manda solo por WhatsApp.</p>
   <div class="franja">
     <span class="dest">🚚 Envío $15 · GRATIS desde $50</span>
     <span>💵 Pago en efectivo</span>
@@ -213,6 +218,11 @@
   </div>
 </header>
 
+<div class="pasos">
+  <div class="paso"><b>1️⃣</b>Elige tus tamales<span>Toca + para agregar</span></div>
+  <div class="paso"><b>🛒</b>Revisa tu carrito<span>Ve tu total y envío</span></div>
+  <div class="paso"><b>📩</b>Envía tu pedido<span>Se manda solo por WhatsApp</span></div>
+</div>
 <div class="aviso-cierre" id="avisoCierre" style="display:none"></div>
 
 <div id="pantallaCerrado" style="display:none">
@@ -228,10 +238,10 @@
 
 <main id="catalogo"></main>
 
-<footer>🌽 TAMALES DOÑA LUPE · Hechos a mano, con maíz y amor<br>Santa Ana #201 Col. Los Olivos, León, Gto.<br>¡Calientitos y deliciosos, como en casa!</footer>
+<footer>🌽 TAMALES DOÑA LUPE · Hechos a mano, con maíz y amor<br>Santa Ana #201 Col. Los Olivos, León, Gto.<br>El pedido se hace aquí en la página. El WhatsApp verde es solo para ayuda.</footer>
 
-<a class="wa-float" href="https://wa.me/524778051005?text=Hola%20Tamales%20Doña%20Lupe%2C%20tengo%20una%20duda" target="_blank" rel="noopener" aria-label="¿Tienes dudas? Escríbenos por WhatsApp">
-  <span class="burbuja">¿Dudas? Escríbenos</span>
+<a class="wa-float" href="https://wa.me/524778051005?text=Hola%20Tamales%20Doña%20Lupe%2C%20tengo%20una%20duda%20(ayuda%2C%20no%20es%20para%20pedir)" target="_blank" rel="noopener" aria-label="Ayuda por WhatsApp, solo dudas, el pedido se hace aquí">
+  <span class="burbuja">¿Dudas? Ayuda aquí</span>
   <span class="icono"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 2 6.5L4 29l7.7-2c1.8 1 3.9 1.6 6.1 1.6h.1c6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.9h-.1c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-4.6 1.2 1.2-4.4-.3-.4c-1-1.7-1.6-3.6-1.6-5.6C5 9.6 10.5 5 16.1 5S27 9.5 27 15.1 22.6 24.9 16 24.9zm5.5-8.1c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5L14.5 9c-.1-.3-.4-.3-.6-.3h-.5c-.2 0-.5.2-.7.5-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.5 4.1 1.7.7 2.3.8 3.1.6.5-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg></span>
 </a>
 
@@ -246,20 +256,20 @@
 
 <div class="fondo-panel" id="fondo" onclick="cerrarTodo()"></div>
 
-<div class="panel" id="panelCarrito">
+<div class="panel" id="panelCarrito" role="dialog" aria-modal="true" aria-labelledby="tituloCarrito" aria-hidden="true" tabindex="-1">
   <div class="panel-header">
-    <h2>Tu pedido</h2>
-    <button class="cerrar" onclick="cerrarTodo()">&times;</button>
+    <h2 id="tituloCarrito">Tu pedido</h2>
+    <button type="button" class="cerrar" onclick="cerrarTodo()" aria-label="Cerrar carrito">&times;</button>
   </div>
   <div id="listaCarrito"></div>
   <div id="resumenCarrito"></div>
   <button class="btn-primario" id="btnContinuar" onclick="irACheckout()">Continuar con la entrega</button>
 </div>
 
-<div class="panel" id="panelCheckout">
+<form class="panel" id="panelCheckout" role="dialog" aria-modal="true" aria-labelledby="tituloCheckout" aria-hidden="true" tabindex="-1" novalidate>
   <div class="panel-header">
-    <h2>Datos de entrega</h2>
-    <button class="cerrar" onclick="cerrarTodo()">&times;</button>
+    <h2 id="tituloCheckout">Datos de entrega</h2>
+    <button type="button" class="cerrar" onclick="cerrarTodo()" aria-label="Cerrar datos de entrega">&times;</button>
   </div>
   <div id="resumenCheckout"></div>
   <label for="nombre">Nombre completo</label>
@@ -298,7 +308,8 @@
   <label for="direccion">Calle y número</label>
   <textarea id="direccion" placeholder="Ej. Santa Ana #201, entre ..."></textarea>
   <div class="error" id="errDireccion">Escribe la dirección donde te entregamos.</div>
-  <button type="button" class="btn-ubicacion" id="btnUbicacion" onclick="usarUbicacion()">📍 Usar mi ubicación actual</button>
+  <button type="button" class="btn-ubicacion destacado" id="btnUbicacion" onclick="usarUbicacion()">📍 Compartir mi ubicación</button>
+  <div class="ubi-msg ok" id="avisoUbi" style="display:block">⭐ Muy importante: compártela para entregarte más rápido y sin errores. Activa GPS + datos.</div>
   <div class="ubi-msg" id="ubiMsg" style="display:none"></div>
   <label for="referencia">Referencias <span class="opc">(opcional)</span></label>
   <textarea id="referencia" placeholder="Portón negro, entre panadería y farmacia..."></textarea>
@@ -312,11 +323,12 @@
     <button type="button" onclick="elegirBillete('$500',this)">$500</button>
   </div>
   <input type="text" id="billete" placeholder="Ej. $200, cambio justo..." style="margin-top:10px">
-  <div class="aviso-pago">💵 Pagas en efectivo cuando te entreguemos tu pedido.</div>
+  <div class="aviso-pago">💵 Pagas en efectivo cuando te entreguemos. No necesitas escribirnos: tu pedido se manda solo.</div>
   <div id="errGeneral">⚠️ Te falta completar algún dato para enviar tu pedido. Revisa los campos marcados en rojo.</div>
-  <button class="btn-primario" id="btnEnviar" onclick="enviarPedido()">Confirmar pedido por WhatsApp</button>
-  <button class="btn-secundario" onclick="volverACarrito()">Regresar al carrito</button>
-</div>
+  <button type="submit" class="btn-primario" id="btnEnviar">Enviar mi pedido</button>
+  <p class="hint" style="text-align:center">Al pulsar se abrirá WhatsApp con tu pedido ya escrito, solo dale Enviar. El botón verde de ayuda es solo para dudas.</p>
+  <button type="button" class="btn-secundario" onclick="volverACarrito()">Regresar al carrito</button>
+</form>
 
 <script>
 /* Para marcar un producto como AGOTADO solo cambia disponible:true por disponible:false en su línea. */
@@ -336,7 +348,7 @@ const ENVIO_GRATIS_DESDE = 50;
 
 /* ============ Horario de pedidos (usa la hora del teléfono del cliente) ============
    Para cambiar el horario solo ajusta estos 3 valores. */
-const HORA_APERTURA = 18;   // 6:00 PM
+const HORA_APERTURA = 0;   // 6:00 PM
 const HORA_CIERRE = 22;    // 10:00 PM
 const AVISO_MINUTOS = 30;  // avisar durante los últimos 30 min antes del cierre
 
@@ -369,27 +381,24 @@ function verificarHorario(){
 
 let carrito = {};
 let ubicacionCliente = null; // {lat, lng, url} se llena con el botón "Usar mi ubicación"
+let ultimoDisparador = null;
 
 function usarUbicacion(){
   const btn = document.getElementById("btnUbicacion");
   const msg = document.getElementById("ubiMsg");
   if(!navigator.geolocation){
     msg.className = "ubi-msg err"; msg.style.display = "block";
-    msg.textContent = "⚠️ Tu navegador no permite compartir ubicación. Escribe tu colonia, calle y número, con eso basta.";
+    msg.textContent = "⚠️ Tu teléfono no permite compartir ubicación. Escribe tu dirección, con eso basta.";
     return;
   }
-  if(window.isSecureContext===false){
-    msg.className = "ubi-msg err"; msg.style.display = "block";
-    msg.textContent = "⚠️ La ubicación solo funciona con la página publicada en internet (https). Por ahora escribe tu dirección manual.";
-    return;
-  }
-  btn.disabled = true; btn.textContent = "⏳ Obteniendo tu ubicación...";
-  msg.className = "ubi-msg err"; msg.style.display = "none";
+  btn.disabled = true; btn.textContent = "⏳ Obteniendo tu ubicación precisa...";
+  msg.style.display = "none";
   const ok = (pos)=>{
     const lat = pos.coords.latitude.toFixed(6);
     const lng = pos.coords.longitude.toFixed(6);
     ubicacionCliente = {lat, lng, url:`https://www.google.com/maps?q=${lat},${lng}`};
     btn.disabled = false; btn.textContent = "📍 Actualizar mi ubicación";
+    document.getElementById("avisoUbi").style.display = "none";
     msg.className = "ubi-msg ok"; msg.style.display = "block";
     msg.innerHTML = `✅ Ubicación capturada. <a href="${ubicacionCliente.url}" target="_blank" rel="noopener">Ver en mapa</a><button type="button" class="ubi-quitar" onclick="quitarUbicacion()">quitar</button>`;
   };
@@ -398,20 +407,23 @@ function usarUbicacion(){
       navigator.geolocation.getCurrentPosition(ok, (e2)=>fallo(e2,true), {enableHighAccuracy:false, timeout:20000, maximumAge:60000});
       return;
     }
-    btn.disabled = false; btn.textContent = "📍 Reintentar ubicación";
+    btn.disabled = false; btn.textContent = "📍 Reintentar mi ubicación";
     msg.className = "ubi-msg err"; msg.style.display = "block";
-    if(err && err.code===1) msg.textContent = "⚠️ Bloqueaste el permiso de ubicación. Actívalo en el candadito de la barra del navegador y reintenta. Si no, escribe tu dirección manual.";
-    else if(err && err.code===3) msg.textContent = "⚠️ Tardó mucho en responder el GPS. Sal al exterior o acércate a una ventana y toca Reintentar. Si no, escribe tu dirección manual.";
-    else msg.textContent = "⚠️ No se pudo obtener tu ubicación. Activa GPS + WiFi, permite el acceso y reintenta. Si no, escribe tu dirección manual.";
+    if(err && err.code===1) msg.textContent = "⚠️ Bloqueaste el permiso. Actívalo en el candadito del navegador y toca Reintentar. Es muy importante para entregarte rápido.";
+    else msg.textContent = "⚠️ No se pudo obtener tu ubicación precisa. Activa GPS + datos, sal al exterior o acércate a una ventana y reintenta.";
   };
-  navigator.geolocation.getCurrentPosition(ok, (e)=>fallo(e,false), {enableHighAccuracy:true, timeout:12000, maximumAge:30000});
+  navigator.geolocation.getCurrentPosition(ok, (e)=>fallo(e,false), {enableHighAccuracy:true, timeout:15000, maximumAge:0});
 }
 function quitarUbicacion(){
   ubicacionCliente = null;
+  window._avisoUbiOk = false;
   const btn = document.getElementById("btnUbicacion");
   const msg = document.getElementById("ubiMsg");
-  btn.textContent = "📍 Usar mi ubicación actual";
+  btn.textContent = "📍 Compartir mi ubicación";
   msg.style.display = "none"; msg.innerHTML = "";
+  const aviso = document.getElementById("avisoUbi");
+  aviso.className = "ubi-msg ok"; aviso.style.display = "block";
+  aviso.textContent = "⭐ Muy importante: compártela para entregarte más rápido y sin errores. Activa GPS + datos.";
 }
 
 function formatoMoneda(n){
@@ -430,7 +442,23 @@ function costoEnvio(){
   return s >= ENVIO_GRATIS_DESDE ? 0 : COSTO_ENVIO;
 }
 function totalConEnvio(){ return subtotalCarrito() + costoEnvio(); }
-function cantidadTotal(){ return Object.values(carrito).reduce((a,b)=>a+b,0); }
+function cantidadTotal(){
+  return Object.entries(carrito).reduce((total,[id,cantidad])=>{
+    const producto = productos.find(p=>p.id==id);
+    return producto && producto.disponible !== false ? total + cantidad : total;
+  },0);
+}
+function normalizarCarrito(){
+  let cambio = false;
+  Object.entries(carrito).forEach(([id,cantidad])=>{
+    const producto = productos.find(p=>p.id==id);
+    if(!producto || producto.disponible===false || !Number.isInteger(cantidad) || cantidad<1){
+      delete carrito[id];
+      cambio = true;
+    }
+  });
+  return cambio;
+}
 
 function mediaProducto(p){
   if(p.video) return `<video src="${p.video}" autoplay muted loop playsinline></video>`;
@@ -472,7 +500,7 @@ function pintarCatalogo(){
 
 function cambiarCantidad(id,delta){
   const p = productos.find(p=>p.id==id);
-  if(p && p.disponible===false && delta>0) return;
+  if(!p || p.disponible===false) return;
   if(delta>0 && !estadoHorario().abierto){ verificarHorario(); return; }
   const actual = carrito[id]||0;
   const nueva = Math.max(0,actual+delta);
@@ -520,12 +548,17 @@ function htmlResumen(){
 
 function abrirCarrito(){
   if(!verificarHorario()) return;
+  ultimoDisparador = document.activeElement;
   pintarCarrito();
   document.getElementById("fondo").classList.add("activo");
-  document.getElementById("panelCarrito").classList.add("abierto");
+  const panel = document.getElementById("panelCarrito");
+  panel.classList.add("abierto");
+  panel.setAttribute("aria-hidden", "false");
+  requestAnimationFrame(()=>panel.focus());
 }
 function pintarCarrito(){
   const lista = document.getElementById("listaCarrito");
+  normalizarCarrito();
   const ids = Object.keys(carrito);
   if(ids.length===0){
     lista.innerHTML = `<div class="vacio">Aún no agregas productos.</div>`;
@@ -552,19 +585,36 @@ function quitarDelCarrito(id){
   pintarCarrito(); actualizarBarra();
 }
 function irACheckout(){
+  normalizarCarrito();
+  if(cantidadTotal()===0){
+    pintarCarrito();
+    actualizarBarra();
+    return;
+  }
   document.getElementById("panelCarrito").classList.remove("abierto");
+  document.getElementById("panelCarrito").setAttribute("aria-hidden", "true");
   document.getElementById("resumenCheckout").innerHTML = htmlResumen();
-  document.getElementById("panelCheckout").classList.add("abierto");
+  const panel = document.getElementById("panelCheckout");
+  panel.classList.add("abierto");
+  panel.setAttribute("aria-hidden", "false");
+  requestAnimationFrame(()=>panel.focus());
 }
 function volverACarrito(){
   document.getElementById("panelCheckout").classList.remove("abierto");
+  document.getElementById("panelCheckout").setAttribute("aria-hidden", "true");
   pintarCarrito();
-  document.getElementById("panelCarrito").classList.add("abierto");
+  const panel = document.getElementById("panelCarrito");
+  panel.classList.add("abierto");
+  panel.setAttribute("aria-hidden", "false");
+  requestAnimationFrame(()=>panel.focus());
 }
 function cerrarTodo(){
   document.getElementById("fondo").classList.remove("activo");
   document.getElementById("panelCarrito").classList.remove("abierto");
   document.getElementById("panelCheckout").classList.remove("abierto");
+  document.getElementById("panelCarrito").setAttribute("aria-hidden", "true");
+  document.getElementById("panelCheckout").setAttribute("aria-hidden", "true");
+  if(ultimoDisparador && typeof ultimoDisparador.focus==="function") ultimoDisparador.focus();
 }
 
 function elegirBillete(valor,btn){
@@ -574,6 +624,12 @@ function elegirBillete(valor,btn){
 }
 function enviarPedido(){
   if(!verificarHorario()) return;
+  normalizarCarrito();
+  if(cantidadTotal()===0){
+    volverACarrito();
+    actualizarBarra();
+    return;
+  }
   const nombre = document.getElementById("nombre").value.trim();
   const telefono = document.getElementById("telefono").value.trim();
   const colonia = document.getElementById("colonia").value;
@@ -607,6 +663,14 @@ function enviarPedido(){
     return;
   }
   document.getElementById("errGeneral").style.display = "none";
+  if(!ubicacionCliente && !window._avisoUbiOk){
+    window._avisoUbiOk = true;
+    const aviso = document.getElementById("avisoUbi");
+    aviso.className = "ubi-msg err"; aviso.style.display = "block";
+    aviso.textContent = "⚠️ Muy importante: toca “Compartir mi ubicación” para entregarte más rápido. Si igual quieres continuar sin ella, vuelve a pulsar Confirmar.";
+    document.getElementById("btnUbicacion").scrollIntoView({behavior:"smooth", block:"center"});
+    return;
+  }
 
   const s = subtotalCarrito();
   const e = costoEnvio();
@@ -645,6 +709,13 @@ document.getElementById("colonia").addEventListener("change", e=>{
   document.getElementById("errColonia").style.display = "none";
   document.getElementById("sinCobertura").style.display = e.target.value==="otra" ? "block" : "none";
   if(e.target.value!=="otra" && document.querySelectorAll(".invalido").length===0) document.getElementById("errGeneral").style.display="none";
+});
+document.getElementById("panelCheckout").addEventListener("submit", e=>{
+  e.preventDefault();
+  enviarPedido();
+});
+document.addEventListener("keydown", e=>{
+  if(e.key==="Escape" && document.querySelector(".panel.abierto")) cerrarTodo();
 });
 pintarCatalogo();
 verificarHorario();
